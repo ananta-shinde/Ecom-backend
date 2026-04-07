@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.ProductDTO;
 import com.example.demo.entities.Brand;
 import com.example.demo.entities.Product;
+import com.example.demo.helper.ImageUploader;
 import com.example.demo.services.ProductService;
 
 @RestController
@@ -21,10 +23,12 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private ImageUploader uploader;
 	
 	@PostMapping("/api/v1/product/new")
-	public String AddProduct(@RequestBody ProductDTO productDto ) {
-		
+	public String AddProduct(@ModelAttribute ProductDTO productDto ) {
+		productDto =uploader.uploadImage(productDto);
 		productService.create(productDto);
 		return "product added";
 	}
@@ -41,11 +45,11 @@ public class ProductController {
 		
 	}
 	
-	@PostMapping("/api/v1/product/file")
-	public String getProduct(@ModelAttribute ProductDTO productDto) {
-		return productService.uploadImage(productDto.getProductImage());
-		
-	}
+//	@PostMapping("/api/v1/product/file")
+//	public String getProduct(@ModelAttribute ProductDTO productDto) {
+//		return ImageUploader.uploadImage(productDto.getProductImage());
+//		
+//	}
 	
 	
 	

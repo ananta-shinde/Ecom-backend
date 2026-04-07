@@ -1,5 +1,7 @@
 package com.example.demo.dtos;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductDTO {
@@ -8,7 +10,10 @@ public class ProductDTO {
 	private String description;
 	private Long brandId;
 	private Long categoryId;
-	private MultipartFile productImage;
+	private List<MultipartFile> productImage;
+	private MultipartFile thumbnailImage;
+	private List<String> images;
+	private String thumbnail;
 	
 	public String getName() {
 		return name;
@@ -34,12 +39,31 @@ public class ProductDTO {
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
-	public MultipartFile getProductImage() {
+	public List<MultipartFile> getProductImage() {
 		return productImage;
 	}
-	public void setProductImage(MultipartFile productImage) {
+	public void setProductImage(List<MultipartFile> productImage) {
 		this.productImage = productImage;
 	}
+	public List<String> getImages() {
+		return images;
+	}
+	public void setImages(List<String> images) {
+		this.images = images;
+	}
+	public MultipartFile getThumbnailImage() {
+		return thumbnailImage;
+	}
+	public void setThumbnailImage(MultipartFile thumbnailImage) {
+		this.thumbnailImage = thumbnailImage;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	
 	
 	
 	

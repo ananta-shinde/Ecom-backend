@@ -21,8 +21,7 @@ import com.example.demo.repositories.ProductRepository;
 @Service
 public class ProductService {
 
-	@Value("${app.upload.dir}")
-    private String uploadDir;
+	
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -38,7 +37,8 @@ public class ProductService {
 		newProduct.setDescription(productDto.getDescription());
 		newProduct.setBrand(brandRepository.getById(productDto.getBrandId()));
 		newProduct.setCategory(categoryRepository.getById(productDto.getCategoryId()));
-		
+		newProduct.setImages(productDto.getImages());
+		newProduct.setThumbnailImage(productDto.getThumbnail());
 		productRepository.save(newProduct);
 	}
 	
@@ -58,20 +58,6 @@ public class ProductService {
 		return productRepository.getById(id);
 	}
 	
-	public  String uploadImage(MultipartFile file) {
-		Path copyLocation = Paths.get(uploadDir);
-		try {
-			Files.createDirectories(copyLocation);
-			String fileName = UUID.randomUUID() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-			Files.copy(file.getInputStream(), copyLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-			return fileName;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "images uploaded";
-				
-	}
 	
 	
 	

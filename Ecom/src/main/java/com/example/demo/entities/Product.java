@@ -29,6 +29,9 @@ public class Product {
 	
 	private List<String> images;
 	
+	@Column(nullable = false)
+	private String thumbnailImage;
+	
 	@ManyToOne
 	private Brand brand;
 	
@@ -92,6 +95,14 @@ public class Product {
 	}
 	public void setUpdatedAt(Instant updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getThumbnailImage() {
+		return thumbnailImage;
+	}
+
+	public void setThumbnailImage(String thumbnailImage) {
+		this.thumbnailImage = thumbnailImage;
 	}
 	
 	
