@@ -2,6 +2,7 @@ package com.example.demo.entities;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +29,11 @@ public class Category {
 	private String description;
 	
 	private boolean isActive = true;
+	
+	@ManyToMany
+	private Set<Offer> offers;
+	
+	
 	@CreationTimestamp
 	private Instant createdAt;
 	@UpdateTimestamp

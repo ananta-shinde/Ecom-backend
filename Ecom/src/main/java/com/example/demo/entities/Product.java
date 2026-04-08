@@ -2,6 +2,7 @@ package com.example.demo.entities;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,7 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,10 +41,22 @@ public class Product {
 	@ManyToOne
 	private Category category;
 	
+	@OneToOne
+	private Stock stock;
+	
 	@CreationTimestamp
 	private Instant createdAt;
 	@UpdateTimestamp
 	private Instant updatedAt;
+	
+	@Column(nullable = false)
+	private double price;
+	
+	@ManyToMany
+	private Set<Offer> offers;
+	
+	
+	
 	
 	
 	public Product() {

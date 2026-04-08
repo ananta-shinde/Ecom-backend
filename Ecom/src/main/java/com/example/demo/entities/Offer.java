@@ -12,84 +12,81 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "brands")
-public class Brand {
-     
+public class Offer {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false)
-	private String name;
+	private String title;
+	
 	@Column(nullable = false, length = 1000)
 	private String description;
 	
 	@Column(nullable = false)
-	private String logoUrl;
+	private double discount;
 	
-	@ManyToMany
-	private Set<Offer> offers;
+	@ManyToMany(mappedBy = "offers")
+	private Set<Product> products;
 	
+	@ManyToMany(mappedBy = "offers")
+	private Set<Brand> brands;
+	
+	@ManyToMany(mappedBy = "offers")
+	private Set<Category> categories;
+		
 	@CreationTimestamp
 	private Instant createdAt;
 	@UpdateTimestamp
 	private Instant updatedAt;
 	
-	public Brand() {
+	public Offer() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public String getLogoUrl() {
-		return logoUrl;
+	public double getDiscount() {
+		return discount;
 	}
-
-	public void setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
-
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
-
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
-
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
-
 	public void setUpdatedAt(Instant updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
+	
 
-	
-	
 }
