@@ -12,8 +12,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="offers")
 public class Offer {
 	
 	@Id
@@ -43,6 +45,36 @@ public class Offer {
 	@UpdateTimestamp
 	private Instant updatedAt;
 	
+	private boolean isActive = true;
+	
+	private boolean isDeleted = false;
+	
+	
+	
+	public boolean isActive() {
+		return isActive;
+	}
+
+
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+
+
 	public Offer() {
 		// TODO Auto-generated constructor stub
 	}
@@ -84,6 +116,42 @@ public class Offer {
 	}
 	public void setUpdatedAt(Instant updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+
+
+	public Set<Brand> getBrands() {
+		return brands;
+	}
+
+
+
+	public void setBrands(Set<Brand> brands) {
+		this.brands = brands;
+	}
+
+
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 	
 	

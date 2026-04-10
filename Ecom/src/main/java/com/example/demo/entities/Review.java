@@ -10,22 +10,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="stocks")
-public class Stock {
-
+@Table(name="reviews")
+public class Review {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false)
-	private double availableQty;
+	private double rating;
 	
-	private double reservedQty;
+	private String comment;
 	
-	private double soldQty;
+	@OneToOne
+	private User user;
 	
 	@CreationTimestamp
 	private Instant createdAt;
@@ -49,29 +51,34 @@ public class Stock {
 	}
 
 	
+	public Review() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public double getAvailableQty() {
-		return availableQty;
+	public double getRating() {
+		return rating;
 	}
-	public void setAvailableQty(double availableQty) {
-		this.availableQty = availableQty;
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
-	public double getReservedQty() {
-		return reservedQty;
+	public String getComment() {
+		return comment;
 	}
-	public void setReservedQty(double reservedQty) {
-		this.reservedQty = reservedQty;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
-	public double getSoldQty() {
-		return soldQty;
+	public User getUser() {
+		return user;
 	}
-	public void setSoldQty(double soldQty) {
-		this.soldQty = soldQty;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Instant getCreatedAt() {
 		return createdAt;
@@ -99,5 +106,5 @@ public class Stock {
 	}
 	
 	
-	
+ 
 }

@@ -4,17 +4,14 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ProductDTO {
+public class ProductDTO extends DTO {
 	
 	private String name;
 	private String description;
 	private Long brandId;
 	private Long categoryId;
-	private List<MultipartFile> productImage;
-	private MultipartFile thumbnailImage;
 	private List<String> images;
 	private String thumbnail;
-	
 	public String getName() {
 		return name;
 	}
@@ -39,23 +36,24 @@ public class ProductDTO {
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
-	public List<MultipartFile> getProductImage() {
-		return productImage;
+
+	public List<MultipartFile> getImage() {
+		return image;
 	}
-	public void setProductImage(List<MultipartFile> productImage) {
-		this.productImage = productImage;
+	public void setImage(List<MultipartFile> image) {
+		image = image;
 	}
+//	public MultipartFile getThumbnailImage() {
+//		return thumbnailImage;
+//	}
+//	public void setThumbnailImage(MultipartFile thumbnailImage) {
+//		this.thumbnailImage = thumbnailImage;
+//	}
 	public List<String> getImages() {
 		return images;
 	}
 	public void setImages(List<String> images) {
 		this.images = images;
-	}
-	public MultipartFile getThumbnailImage() {
-		return thumbnailImage;
-	}
-	public void setThumbnailImage(MultipartFile thumbnailImage) {
-		this.thumbnailImage = thumbnailImage;
 	}
 	public String getThumbnail() {
 		return thumbnail;
@@ -63,8 +61,16 @@ public class ProductDTO {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
-	
-	
+	@Override
+	public void setThumbnailImage(MultipartFile thumbnailImage) {
+		// TODO Auto-generated method stub
+		this.thumbnailImage = thumbnailImage;
+	}
+	@Override
+	public MultipartFile getThumbnailImage() {
+		// TODO Auto-generated method stub
+		return thumbnailImage;
+	}
 	
 	
 	

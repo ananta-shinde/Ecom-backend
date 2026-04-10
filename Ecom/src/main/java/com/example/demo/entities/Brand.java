@@ -38,6 +38,10 @@ public class Brand {
 	@UpdateTimestamp
 	private Instant updatedAt;
 	
+	private boolean isActive = true;
+	
+	private boolean isDeleted = false;
+	
 	public Brand() {
 		// TODO Auto-generated constructor stub
 	}
@@ -90,6 +94,31 @@ public class Brand {
 		this.updatedAt = updatedAt;
 	}
 
+	public Set<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	
 	
 	
 }

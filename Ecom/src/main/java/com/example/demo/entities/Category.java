@@ -38,6 +38,10 @@ public class Category {
 	private Instant createdAt;
 	@UpdateTimestamp
 	private Instant updatedAt;
+	
+	
+	
+	private boolean isDeleted = false;
 
 	public Category() {
 		
@@ -89,6 +93,22 @@ public class Category {
 
 	public void setUpdatedAt(Instant updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Set<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 	

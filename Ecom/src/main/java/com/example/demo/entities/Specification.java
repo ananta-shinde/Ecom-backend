@@ -1,31 +1,28 @@
 package com.example.demo.entities;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="stocks")
-public class Stock {
+@Table(name="specifications")
+public class Specification {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
-	private double availableQty;
-	
-	private double reservedQty;
-	
-	private double soldQty;
+	@OneToMany
+	private List<SpecItem> items;
 	
 	@CreationTimestamp
 	private Instant createdAt;
@@ -49,39 +46,38 @@ public class Stock {
 	}
 
 	
+	public Specification() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public double getAvailableQty() {
-		return availableQty;
+
+	public List<SpecItem> getItems() {
+		return items;
 	}
-	public void setAvailableQty(double availableQty) {
-		this.availableQty = availableQty;
+
+	public void setItems(List<SpecItem> items) {
+		this.items = items;
 	}
-	public double getReservedQty() {
-		return reservedQty;
-	}
-	public void setReservedQty(double reservedQty) {
-		this.reservedQty = reservedQty;
-	}
-	public double getSoldQty() {
-		return soldQty;
-	}
-	public void setSoldQty(double soldQty) {
-		this.soldQty = soldQty;
-	}
+
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
+
 	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
+
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
+
 	public void setUpdatedAt(Instant updatedAt) {
 		this.updatedAt = updatedAt;
 	}

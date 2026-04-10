@@ -13,17 +13,17 @@ public class BrandService {
 	@Autowired
 	  private BrandRepository brandRepository;
 		
-	  public void create(Brand brand) {
-		  brandRepository.save(brand);
+	  public Brand create(Brand brand) {
+		  return brandRepository.save(brand);
 	  }
 	  
-	  public void delete(Long id) {
-		  brandRepository.deleteById(id);
-	  }
+//	  public void delete(Long id) {
+//		  brandRepository.deleteById(id);
+//	  }
 	  
-	  public void delete(Brand brand) {
-		  brandRepository.delete(brand);
-	  }
+//	  public void delete(Brand brand) {
+//		  brandRepository.delete(brand);
+//	  }
 	  
 	  public void update(Brand brand) {
 		  brandRepository.save(brand);
@@ -35,6 +35,10 @@ public class BrandService {
 	  
 	  public List<Brand> getList(){
 		  return brandRepository.findAll();
+	  }
+	  
+	  public void delete(Long id) {
+		  Brand brand = brandRepository.getById(id);
 	  }
 	  
 	  

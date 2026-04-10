@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.dtos.DTO;
 import com.example.demo.dtos.ProductDTO;
 
 @Component
@@ -23,9 +24,9 @@ public class ImageUploader {
 	@Value("${app.baseUrl}")
 	private String baseUrl;
 	
-	public ProductDTO uploadImage(ProductDTO productDTO) {
+	public ProductDTO uploadImage(DTO productDTO) {
 		Path copyLocation = Paths.get(uploadDir);
-		List<MultipartFile> fileList = productDTO.getProductImage();
+		List<MultipartFile> fileList = productDTO.getImage();
 		MultipartFile thumbnail = productDTO.getThumbnailImage();
 		try {
 			List<String> images = new ArrayList<String>();
