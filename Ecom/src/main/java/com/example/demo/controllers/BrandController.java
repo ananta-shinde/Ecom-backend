@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.helper.ImageUploader;
 import com.example.demo.repositories.BrandRepository;
 import com.example.demo.responses.AppResponse;
 
@@ -24,20 +25,24 @@ import com.example.demo.services.BrandService;
 public class BrandController {
 	
 	
+	private final ImageUploader imageUploader;
+
 	@Autowired
 	private BrandService brandService;
 
 	AppResponse appResponse ;
 	
-	public BrandController() {
+	public BrandController(ImageUploader imageUploader) {
 		// TODO Auto-generated constructor stub
 		appResponse = new AppResponse();
+		this.imageUploader = imageUploader;
 		}
 	
 	
 	@PostMapping("/api/v1/brand/new")
-	public AppResponse AddBrand(@ModelAttribute BrandDto brand) {
-		Brand createdbrand = brandService.create(brand);
+	public AppResponse AddBrand(@ModelAttribute BrandDto brandDto) {
+		imageUploader.uploadImage(brandDto);
+		Brand createdbrand = brandService.create(brandDto);
 		appResponse.put("status", 201);
 		appResponse.put("id", createdbrand.getId());
 		appResponse.put("message", "brand created successfully");
