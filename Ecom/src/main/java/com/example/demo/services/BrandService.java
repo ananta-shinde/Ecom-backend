@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dtos.BrandDto;
 import com.example.demo.entities.Brand;
 import com.example.demo.repositories.BrandRepository;
 
@@ -13,7 +14,12 @@ public class BrandService {
 	@Autowired
 	  private BrandRepository brandRepository;
 		
-	  public Brand create(Brand brand) {
+	  public Brand create(BrandDto brandDto) {
+		  Brand brand = new Brand();
+		  brand.setName(brandDto.getName());
+		  brand.setDescription(brandDto.getDescription());
+		  brand.setLogoUrl(brandDto.getLogoUrl());
+
 		  return brandRepository.save(brand);
 	  }
 	  

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.ProductDTO;
 import com.example.demo.entities.Brand;
 import com.example.demo.entities.Product;
-import com.example.demo.helper.ImageUploader;
+import com.example.demo.helper.ProductImageUploader;
 import com.example.demo.services.ProductService;
 
 @RestController
@@ -24,11 +25,17 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	@Autowired
-	private ImageUploader uploader;
+	private ProductImageUploader uploader;
 	
 	@PostMapping("/api/v1/product/new")
 	public String AddProduct(@ModelAttribute ProductDTO productDto ) {
-		productDto =uploader.uploadImage(productDto);
+		try {
+			productDto.setImageUrls( uploader.uploadImage(productDto.getImages()));
+			productDto.setThumbnail(uploader.uploadImage(productDto.getThumbnailimage()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		productService.create(productDto);
 		return "product added";
 	}

@@ -37,7 +37,7 @@ public class ProductService {
 		newProduct.setDescription(productDto.getDescription());
 		newProduct.setBrand(brandRepository.getById(productDto.getBrandId()));
 		newProduct.setCategory(categoryRepository.getById(productDto.getCategoryId()));
-		newProduct.setImages(productDto.getImages());
+		newProduct.setImages(productDto.getImageUrls());
 		newProduct.setThumbnailImage(productDto.getThumbnail());
 		productRepository.save(newProduct);
 	}

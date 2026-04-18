@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class BrandDto extends DTO{
+public class BrandDto{
 	
 	private String name;
 	private String description;
-	private List<MultipartFile> image;
+	private MultipartFile image;
 	private String logoUrl;
 	public String getName() {
 		return name;
@@ -22,10 +22,8 @@ public class BrandDto extends DTO{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<MultipartFile> getImage() {
-		return image;
-	}
-	public void setImage(List<MultipartFile> logo) {
+	
+	public void setImage(MultipartFile logo) {
 		this.image= logo;
 	}
 	public String getLogoUrl() {
@@ -33,6 +31,9 @@ public class BrandDto extends DTO{
 	}
 	public void setLogoUrl(String logoUrl) {
 		this.logoUrl = logoUrl;
+	}
+	public MultipartFile getImage() {
+		return image;
 	}
 	
 	
