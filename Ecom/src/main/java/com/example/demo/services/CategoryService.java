@@ -14,8 +14,8 @@ public class CategoryService {
 	  @Autowired
 	  private CategoryRepository cateogoryRepository;
 		
-	  public void createNewCategory(Category category) {
-		  cateogoryRepository.save(category);
+	  public Category createNewCategory(Category category) {
+		  return cateogoryRepository.save(category);
 	  }
 	  
 	  public void deleteCategory(Long id) {
@@ -26,8 +26,8 @@ public class CategoryService {
 		  cateogoryRepository.delete(category);
 	  }
 	  
-	  public void updateCategory(Category category) {
-		  cateogoryRepository.save(category);
+	  public Category updateCategory(Category category) {
+		  return cateogoryRepository.save(category);
 	  }
 	  
 	  public Category getCategoryById(Long id) {
