@@ -5,7 +5,13 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class BrandDto{
-	
+	private Long id;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	private String name;
 	private String description;
 	private MultipartFile image;

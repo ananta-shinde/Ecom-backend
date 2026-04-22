@@ -39,11 +39,33 @@ public class ProductService {
 		newProduct.setCategory(categoryRepository.getById(productDto.getCategoryId()));
 		newProduct.setImages(productDto.getImageUrls());
 		newProduct.setThumbnailImage(productDto.getThumbnail());
+		newProduct.setPrice(productDto.getPrice());
 		productRepository.save(newProduct);
 	}
 	
-	public void  update(Product product) {
-		productRepository.save(product);
+	public void update(ProductDTO productDto) {
+		// 1. Find the existing product in the database using the ID sent from React
+		Product existingProduct = productRepository.findById(productDto.getId())
+				.orElseThrow(() -> new RuntimeException("Product not found"));
+
+		// 2. Update the text fields
+		existingProduct.setName(productDto.getName());
+		existingProduct.setDescription(productDto.getDescription());
+		existingProduct.setPrice(productDto.getPrice());
+
+		// 3. Update the relationships (Brand & Category)
+		existingProduct.setBrand(brandRepository.findById(productDto.getBrandId()).orElse(null));
+		existingProduct.setCategory(categoryRepository.findById(productDto.getCategoryId()).orElse(null));
+
+		// 4. Update Images ONLY IF new ones were uploaded
+		if (productDto.getThumbnail() != null && !productDto.getThumbnail().isEmpty()) {
+			existingProduct.setThumbnailImage(productDto.getThumbnail());
+		}
+		
+		if (productDto.getImageUrls() != null && !productDto.getImageUrls().isEmpty()) {
+			existingProduct.setImages(productDto.getImageUrls());
+		}
+		productRepository.save(existingProduct);
 	}
 	
 	public void  delete(Long id) {
@@ -56,6 +78,11 @@ public class ProductService {
 	
 	public Product  getproductById(Long id) {
 		return productRepository.getById(id);
+	}
+	public void softDelete(Long id) {
+	    Product product = productRepository.findById(id).orElseThrow();
+	    product.setDeleted(true); // Assuming your boolean variable is named 'deleted' or 'isDeleted'
+	    productRepository.save(product);
 	}
 	
 	

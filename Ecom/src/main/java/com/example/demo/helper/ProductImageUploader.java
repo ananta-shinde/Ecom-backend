@@ -28,17 +28,20 @@ public class ProductImageUploader {
 			Files.createDirectories(copyLocation);
 			String fileName = UUID.randomUUID() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 			Files.copy(file.getInputStream(), copyLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-			images.add(baseUrl+fileName);
+			images.add(baseUrl+"/products/"+fileName);
 		}	
 		return images;
 	}
 	
 	public String uploadImage(MultipartFile file) throws IOException {
+		if (file == null || file.isEmpty()) {
+	        return null; 
+	    }
 		Path copyLocation = Paths.get(uploadDir);
 			Files.createDirectories(copyLocation);
 			String fileName = UUID.randomUUID() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 			Files.copy(file.getInputStream(), copyLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-			return baseUrl+fileName;
+			return baseUrl+"products/"+fileName;
 			
 		
 	}

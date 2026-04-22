@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping; // Put this at the top with other imports!
 
 import com.example.demo.dtos.BrandDto;
 import com.example.demo.entities.Brand;
@@ -67,12 +69,58 @@ public class BrandController {
 		return appResponse;	
 	}
 	
-	@GetMapping("/api/v1/brand/{:id}")
-	public Brand getBrandById(@PathVariable Long id) {
-		return brandService.getById(id);
+	@GetMapping("/api/v1/brand/{id}")
+	public AppResponse getBrandById(@PathVariable Long id) {
+				Brand brand = brandService.getById(id);
+				if(brand != null) {
+					appResponse.put("status", 200);
+					appResponse.put("message", "success");
+					appResponse.put("brand", brand);
+					}else {
+						appResponse.put("status", 404);
+						appResponse.put("message", "not found");
+						
+					}
+				return appResponse;
+
+	}
+	@PostMapping("/api/v1/brand/update")
+	public AppResponse updateBrand(@ModelAttribute BrandDto brandDto) {
 		
+		try {
+			// Fixed: Changed getLogo() to getImage() to match your DTO
+			if (brandDto.getImage() != null && !brandDto.getImage().isEmpty()) {
+				brandDto.setLogoUrl(imageUploader.uploadImage(brandDto.getImage()));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			appResponse.put("status", 500);
+			appResponse.put("message", "Error uploading image");
+			return appResponse;
+		}
+		
+		// Call your BrandService to save the updated data
+		brandService.update(brandDto); 
+		
+		appResponse.put("status", 200);
+		appResponse.put("message", "brand updated successfully!");
+		return appResponse;
 	}
 	
-	
-	
+
+	// Add this inside BrandController.java
+	@DeleteMapping("/api/v1/brand/{id}")
+	public AppResponse deleteBrand(@PathVariable Long id) {
+		try {
+			brandService.softDelete(id);
+			
+			appResponse.put("status", 200);
+			appResponse.put("message", "Brand deleted successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			appResponse.put("status", 500);
+			appResponse.put("message", "Failed to delete brand");
+		}
+		return appResponse;
+	}
 }
