@@ -4,17 +4,20 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dtos.ProductDTO;
 import com.example.demo.entities.Product;
 import com.example.demo.helper.ProductImageUploader;
+import com.example.demo.responses.AppResponse;
 import com.example.demo.services.ProductService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -25,6 +28,8 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private ProductImageUploader uploader;
+	@Autowired
+	private AppResponse appResponse;
 	
 	@PostMapping("/api/v1/product/new")
 	public String AddProduct(@ModelAttribute ProductDTO productDto ) {
@@ -80,9 +85,35 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
-		// Call your service to update the database
-		productService.update(productDto); // Make sure you have an update() method in your service!
+		productService.update(productDto); 
 		
 		return "product updated";
+	}
+	@PostMapping("/api/v1/product/featured/update")
+	public String updateFeaturedProducts(@RequestBody List<Long> featuredIds) {
+		productService.updateFeaturedProducts(featuredIds);
+		return "Featured products updated successfully";
+	}
+	@GetMapping("/api/v1/product/featured")
+	public AppResponse getFeaturedProducts() {
+		try {
+			List<Product> featured = productService.getFeaturedProducts();
+            
+			appResponse.put("status", 200);
+			appResponse.put("message", "success");
+			appResponse.put("products", featured); 
+		} catch (Exception e) {
+			appResponse.put("status", 500);
+			appResponse.put("message", "Failed to fetch featured products");
+		}
+		return appResponse;
+	}
+	@GetMapping("/api/v2/product/{category}")
+	public AppResponse getProductByCategory(@PathVariable String category) {
+		List<Product> products= productService.getProductByCategory(category);
+		appResponse.put("status", 200);
+		appResponse.put("message", "success");
+		appResponse.put("products", products); 
+		return appResponse;
 	}
 }

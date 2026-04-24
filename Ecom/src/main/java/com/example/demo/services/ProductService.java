@@ -18,6 +18,8 @@ import com.example.demo.repositories.BrandRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ProductRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProductService {
 
@@ -81,12 +83,30 @@ public class ProductService {
 	}
 	public void softDelete(Long id) {
 	    Product product = productRepository.findById(id).orElseThrow();
-	    product.setDeleted(true); // Assuming your boolean variable is named 'deleted' or 'isDeleted'
+	    product.setDeleted(true);
 	    productRepository.save(product);
 	}
 	
 	
+	public List<Product> getFeaturedProducts() {
+		return productRepository.findByIsFeaturedTrueAndIsDeletedFalse();
+	}
+
+	@Transactional
+	public void updateFeaturedProducts(List<Long> featuredIds) {
+		List<Product> allProducts = productRepository.findAll();
+		allProducts.forEach(p -> p.setFeatured(false));
+		
+		if (featuredIds != null && !featuredIds.isEmpty()) {
+			List<Product> featuredOnes = productRepository.findAllById(featuredIds);
+			featuredOnes.forEach(p -> p.setFeatured(true));
+		}
+		
+		productRepository.saveAll(allProducts);
+	}
 	
-	
-	
+	public List<Product> getProductByCategory(String name) {
+		return productRepository.findByCategoryName(name);
+		
+	}
 }

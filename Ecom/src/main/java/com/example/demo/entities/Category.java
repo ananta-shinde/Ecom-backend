@@ -2,6 +2,7 @@ package com.example.demo.entities;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,6 +36,7 @@ public class Category {
 	@JsonIgnore
 	@ManyToMany
 	private Set<Offer> offers;
+	
 	
 	
 	@CreationTimestamp

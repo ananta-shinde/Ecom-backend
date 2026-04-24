@@ -59,6 +59,16 @@ public class Product {
 	@OneToMany
 	private List<Review> reviews;
 	
+	private boolean isFeatured = false;
+
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    public void setFeatured(boolean isFeatured) {
+        this.isFeatured = isFeatured;
+    }
+	
 	private boolean isActive = true;
 	
 	private boolean isDeleted = false;
