@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dtos.ProductDTO;
 import com.example.demo.entities.Product;
+import com.example.demo.entities.Review;
 import com.example.demo.helper.ProductImageUploader;
 import com.example.demo.responses.AppResponse;
 import com.example.demo.services.ProductService;
@@ -30,6 +31,7 @@ public class ProductController {
 	private ProductImageUploader uploader;
 	@Autowired
 	private AppResponse appResponse;
+	
 	
 	@PostMapping("/api/v1/product/new")
 	public String AddProduct(@ModelAttribute ProductDTO productDto ) {
@@ -89,6 +91,7 @@ public class ProductController {
 		
 		return "product updated";
 	}
+
 	@PostMapping("/api/v1/product/featured/update")
 	public String updateFeaturedProducts(@RequestBody List<Long> featuredIds) {
 		productService.updateFeaturedProducts(featuredIds);
@@ -114,6 +117,15 @@ public class ProductController {
 		appResponse.put("status", 200);
 		appResponse.put("message", "success");
 		appResponse.put("products", products); 
+		return appResponse;
+	}
+
+	@PostMapping("api/v1/product/user/review/new/{id}")
+	public AppResponse createReview(@PathVariable Long id, @RequestBody Review review) {
+		Product product = productService.setReview(id, review);
+		appResponse.put("status", 201);
+		appResponse.put("message", "success");
+		appResponse.put("id", product.getId());
 		return appResponse;
 	}
 }

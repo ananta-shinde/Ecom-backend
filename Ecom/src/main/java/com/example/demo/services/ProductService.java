@@ -14,9 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dtos.ProductDTO;
 import com.example.demo.entities.Product;
+import com.example.demo.entities.Review;
 import com.example.demo.repositories.BrandRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ProductRepository;
+import com.example.demo.repositories.ReviewRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -32,6 +34,10 @@ public class ProductService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
+
 	
 	public void  create(ProductDTO productDto) {
 		Product newProduct = new Product();
@@ -81,13 +87,14 @@ public class ProductService {
 	public Product  getproductById(Long id) {
 		return productRepository.getById(id);
 	}
+	
 	public void softDelete(Long id) {
 	    Product product = productRepository.findById(id).orElseThrow();
 	    product.setDeleted(true);
 	    productRepository.save(product);
 	}
 	
-	
+
 	public List<Product> getFeaturedProducts() {
 		return productRepository.findByIsFeaturedTrueAndIsDeletedFalse();
 	}
@@ -103,6 +110,21 @@ public class ProductService {
 		}
 		
 		productRepository.saveAll(allProducts);
+	}
+		
+	public Product setReview(Long productId, Review review) {
+		Product existingProduct = getproductById(productId);
+		
+		Review savedReview = reviewRepository.save(review);
+		
+		List<Review> reviews =  existingProduct.getReviews();
+		
+		reviews.add(savedReview);
+		
+		existingProduct.setReviews(reviews);
+		
+		return productRepository.save(existingProduct);
+
 	}
 	
 	public List<Product> getProductByCategory(String name) {

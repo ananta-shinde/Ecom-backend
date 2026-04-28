@@ -28,7 +28,7 @@ public class BrandImageUploader {
 			Files.createDirectories(copyLocation);
 			String fileName = UUID.randomUUID() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 			Files.copy(file.getInputStream(), copyLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-			images.add(baseUrl+"/brands/"+fileName);
+			images.add(baseUrl+"brands/"+fileName);
 		}	
 		return images;
 	}
